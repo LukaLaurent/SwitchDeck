@@ -186,7 +186,7 @@ namespace SwitchDeck
             { "phTemplateName", new[] { "Template name", "Nom du modèle" } },
             { "phTemplateDesc", new[] { "What is this port for?", "À quoi sert ce port ?" } },
             { "commandsTitle", new[] { "Interface commands", "Commandes d'interface" } },
-            { "commandsHint", new[] { "One command per line, as typed inside the interface. Use {{name}} for values you choose when deploying and {{port}} for the port name. Lines starting with ! are notes.", "Une commande par ligne, comme dans l'interface. Utilisez {{nom}} pour les valeurs choisies au déploiement et {{port}} pour le nom du port. Les lignes commençant par ! sont des notes." } },
+            { "commandsHint", new[] { "One command per line, as typed inside the interface. Use {{name}} for a value set on the right, and {{port}} for the port name. Lines starting with ! are notes.", "Une commande par ligne, comme dans l'interface. Utilisez {{nom}} pour une valeur réglée à droite, et {{port}} pour le nom du port. Les lignes commençant par ! sont des notes." } },
             { "resetFirst", new[] { "Reset the port before applying", "Réinitialiser le port avant" } },
             { "resetFirstTip", new[] { "Sends default interface first, so old settings do not stay behind.", "Envoie d'abord default interface, pour ne pas garder d'anciens réglages." } },
             { "unsaved", new[] { "Unsaved changes", "Modifications non enregistrées" } },

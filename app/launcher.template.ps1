@@ -1,7 +1,8 @@
 $ErrorActionPreference = 'Stop'
 $scriptPath = $MyInvocation.MyCommand.Path
 $splash = $null
-$quiet = @('--selftest', '--sshtest', '--render-ui', '--exit', '--demo-shell', '--write-assets') | Where-Object { $args -contains $_ }
+$argList = @($args)
+$quiet = @('--selftest', '--sshtest', '--render-ui', '--exit', '--demo-shell', '--write-assets') | Where-Object { $argList -contains $_ }
 
 function Show-Splash {
     $existing = $null

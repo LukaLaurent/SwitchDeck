@@ -382,7 +382,7 @@ namespace SwitchDeck
             Directory.CreateDirectory(dir);
             Program.Rendering = true;
             try { Application.EnableVisualStyles(); } catch { }
-            Application.SetCompatibleTextRenderingDefault(false);
+            try { Application.SetCompatibleTextRenderingDefault(false); } catch { }
             string[] themes = args.Contains("--dark-only") ? new[] { "dark" } : args.Contains("--light-only") ? new[] { "light" } : new[] { "light", "dark" };
             string[] langs = args.Contains("--fr") ? new[] { "en", "fr" } : new[] { "en" };
             int w = 1320, h = 840;
@@ -475,32 +475,9 @@ namespace SwitchDeck
                     f.Deploy.ShowPortsStep();
                     Pump(300);
                     Shot(f, Path.Combine(dir, "scenario-deploy-2-ports.png"));
-                    f.Deploy.Prepare(lab, new List<string>(), null);
+                    f.Deploy.Prepare(lab, Ports.Expand("Gi1/0/3-9, Gi1/0/11-12, Gi1/0/47", null), wifi == null ? null : wifi.Id);
                     f.Deploy.ShowPortsStep();
                     Pump(200);
-                    foreach (Control c in AllControls(f))
-                    {
-                        Btn b = c as Btn;
-                        if (b == null || b.Text != L.T("all") || !b.Visible) continue;
-                        Point center = b.PointToScreen(new Point(b.Width / 2, b.Height / 2));
-                        Control top = f.GetChildAtPoint(f.PointToClient(center), GetChildAtPointSkip.Invisible);
-                        Control deepest = top;
-                        while (deepest != null)
-                        {
-                            Control next = deepest.GetChildAtPoint(deepest.PointToClient(center), GetChildAtPointSkip.Invisible);
-                            if (next == null) break;
-                            deepest = next;
-                        }
-                        typeof(Control).GetMethod("OnClick", System.Reflection.BindingFlags.NonPublic | System.Reflection.BindingFlags.Instance).Invoke(b, new object[] { EventArgs.Empty });
-                        Pump(200);
-                        Console.WriteLine("AFTER CLICK subtitle: " + ((Card)b.Parent).Subtitle);
-                        Point local = new Point(b.Width / 2, b.Height / 2);
-                        SendMessage(b.Handle, 0x201, (IntPtr)1, (IntPtr)((local.Y << 16) | local.X));
-                        SendMessage(b.Handle, 0x202, IntPtr.Zero, (IntPtr)((local.Y << 16) | local.X));
-                        Pump(200);
-                        Console.WriteLine("AFTER MOUSE subtitle: " + ((Card)b.Parent).Subtitle);
-                        Console.WriteLine("ALLBTN bounds " + b.Bounds + " parent " + b.Parent.GetType().Name + " hit " + (deepest == null ? "null" : deepest.GetType().Name + " " + deepest.Bounds + " text " + deepest.Text));
-                    }
                     f.Deploy.DeployOrStop();
                     Pump(700);
                     Shot(f, Path.Combine(dir, "scenario-deploy-running.png"));
